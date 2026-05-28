@@ -88,6 +88,7 @@ namespace {
     {
         CAppData* pData = oGetOrAddAppData(pCache, appId, bCreate);
         // LOG_MISC_TRACE("GetOrAddAppData: appId={} bCreate={} -> pData={}", appId, bCreate, pData ? pData->DebugString() : "null");
+        // TODO: find a more robust way
         if (LuaConfig::HasDepot(appId, false) && pData && !bCreate && pData->IsUnresolvedAppInfo()) {
             LOG_MISC_DEBUG("GetOrAddAppData: Marking appId {} as skip_flag=true to bypass license update blocking", appId);
             pData->bSkipFlag = true;
@@ -108,7 +109,7 @@ namespace Hooks_Misc {
         HOOK_BEGIN();
         INSTALL_HOOK_C(BuildSpawnEnvBlock);
         INSTALL_HOOK_C(OptedInMask);
-        INSTALL_HOOK_C(GetOrAddAppData);
+        // INSTALL_HOOK_C(GetOrAddAppData);
         HOOK_END();
     }
 
@@ -116,7 +117,7 @@ namespace Hooks_Misc {
         UNHOOK_BEGIN();
         UNINSTALL_HOOK(BuildSpawnEnvBlock);
         UNINSTALL_HOOK(OptedInMask);
-        UNINSTALL_HOOK(GetOrAddAppData);
+        // UNINSTALL_HOOK(GetOrAddAppData);
         UNHOOK_END();
     }
 
